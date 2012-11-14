@@ -5,7 +5,7 @@ namespace TransIp.Api.Dto
 	/// <summary>
 	/// Models branding for a Domain.
 	/// </summary>
-	[DataContract]
+	[DataContract(Namespace = "http://www.transip.nl/soap")]
 	public class DomainBranding
 	{
 		/// <summary>

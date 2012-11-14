@@ -6,7 +6,7 @@ namespace TransIp.Api.Dto
 	/// <summary>
 	/// WhoisContact
 	/// </summary>
-	[DataContract]
+	[DataContract(Namespace = "http://www.transip.nl/soap")]
 	public class WhoisContact
 	{
 		/// <summary>
@@ -46,7 +46,7 @@ namespace TransIp.Api.Dto
 		public string CompanyNumber { get; set; }
 
 		/// <summary>
-		///  The company type of this Contact, in case of a company.
+		/// The company type of this Contact, in case of a company.
 		/// </summary>
 		[DataMember(Name = "companyType")]
 		public string CompanyType { get; set; }
@@ -68,6 +68,12 @@ namespace TransIp.Api.Dto
 		/// </summary>
 		[DataMember(Name = "postalCode")]
 		public string PostalCode { get; set; }
+
+		/// <summary>
+		/// The city part of the address of this Contact.
+		/// </summary>
+		[DataMember(Name = "city")]
+		public string City { get; set; }
 
 		/// <summary>
 		/// The phone number of this Contact.

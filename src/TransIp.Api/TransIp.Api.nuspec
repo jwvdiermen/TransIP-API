@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.github.com/Crealuz/TransIP-API/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/Crealuz/TransIP-API</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Client library for the TransIP API written in C#.</description>
+    <releaseNotes>Initial release.</releaseNotes>
+    <copyright>Copyright (c) 2011-2012 Crealuz - All rights reserved</copyright>
+    <tags>API Service TransIP</tags>
+  </metadata>
+</package>

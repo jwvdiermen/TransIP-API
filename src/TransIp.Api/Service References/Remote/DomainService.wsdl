@@ -1,0 +1,555 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd1="http://www.transip.nl/soap" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:impl="http://www.transip.nl/soap" xmlns:tns="http://www.transip.nl/soap" xmlns="http://schemas.xmlsoap.org/wsdl/" name="DomainService" targetNamespace="http://www.transip.nl/soap" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.transip.nl/soap">
+      <xsd:complexType name="ArrayOfstring">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="xsd:string[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfDomainCheckResult">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns:DomainCheckResult[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="DomainCheckResult">
+        <xsd:sequence>
+          <xsd:element name="domainName" type="xsd:string" />
+          <xsd:element name="status" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="Domain">
+        <xsd:sequence>
+          <xsd:element name="name" type="xsd:string" />
+          <xsd:element name="nameservers" type="tns:ArrayOfNameserver" />
+          <xsd:element name="contacts" type="tns:ArrayOfWhoisContact" />
+          <xsd:element name="dnsEntries" type="tns:ArrayOfDnsEntry" />
+          <xsd:element name="branding" type="tns:DomainBranding" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="authCode" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="isLocked" type="xsd:boolean" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="registrationDate" type="xsd:string" />
+          <xsd:element minOccurs="0" maxOccurs="1" name="renewalDate" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfNameserver">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns:Nameserver[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Nameserver">
+        <xsd:sequence>
+          <xsd:element name="hostname" type="xsd:string" />
+          <xsd:element name="ipv4" type="xsd:string" />
+          <xsd:element name="ipv6" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfWhoisContact">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns:WhoisContact[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="WhoisContact">
+        <xsd:sequence>
+          <xsd:element name="type" type="xsd:string" />
+          <xsd:element name="firstName" type="xsd:string" />
+          <xsd:element name="middleName" type="xsd:string" />
+          <xsd:element name="lastName" type="xsd:string" />
+          <xsd:element name="companyName" type="xsd:string" />
+          <xsd:element name="companyKvk" type="xsd:string" />
+          <xsd:element name="companyType" type="xsd:string" />
+          <xsd:element name="street" type="xsd:string" />
+          <xsd:element name="number" type="xsd:string" />
+          <xsd:element name="postalCode" type="xsd:string" />
+          <xsd:element name="city" type="xsd:string" />
+          <xsd:element name="phoneNumber" type="xsd:string" />
+          <xsd:element name="faxNumber" type="xsd:string" />
+          <xsd:element name="email" type="xsd:string" />
+          <xsd:element name="country" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfDnsEntry">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns:DnsEntry[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="DnsEntry">
+        <xsd:sequence>
+          <xsd:element name="name" type="xsd:string" />
+          <xsd:element name="expire" type="xsd:int" />
+          <xsd:element name="type" type="xsd:string" />
+          <xsd:element name="content" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="DomainBranding">
+        <xsd:sequence>
+          <xsd:element name="companyName" type="xsd:string" />
+          <xsd:element name="supportEmail" type="xsd:string" />
+          <xsd:element name="companyUrl" type="xsd:string" />
+          <xsd:element name="termsOfUsageUrl" type="xsd:string" />
+          <xsd:element name="bannerLine1" type="xsd:string" />
+          <xsd:element name="bannerLine2" type="xsd:string" />
+          <xsd:element name="bannerLine3" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ArrayOfTld">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns:Tld[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+      <xsd:complexType name="Tld">
+        <xsd:sequence>
+          <xsd:element name="name" type="xsd:string" />
+          <xsd:element name="price" type="xsd:float" />
+          <xsd:element name="renewalPrice" type="xsd:float" />
+          <xsd:element name="capabilities" type="tns:ArrayOfstring" />
+          <xsd:element name="registrationPeriodLength" type="xsd:int" />
+          <xsd:element name="cancelTimeFrame" type="xsd:int" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="DomainAction">
+        <xsd:sequence>
+          <xsd:element name="name" type="xsd:string" />
+          <xsd:element name="hasFailed" type="xsd:boolean" />
+          <xsd:element name="message" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="BatchCheckAvailabilityRequest">
+    <wsdl:part name="domainNames" type="tns:ArrayOfstring" />
+  </wsdl:message>
+  <wsdl:message name="BatchCheckAvailabilityResponse">
+    <wsdl:part name="return" type="tns:ArrayOfDomainCheckResult" />
+  </wsdl:message>
+  <wsdl:message name="CheckAvailabilityRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="CheckAvailabilityResponse">
+    <wsdl:part name="return" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWhoisRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetWhoisResponse">
+    <wsdl:part name="return" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetDomainNamesRequest" />
+  <wsdl:message name="GetDomainNamesResponse">
+    <wsdl:part name="return" type="tns:ArrayOfstring" />
+  </wsdl:message>
+  <wsdl:message name="GetInfoRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetInfoResponse">
+    <wsdl:part name="return" type="tns:Domain" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthCodeRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetAuthCodeResponse">
+    <wsdl:part name="return" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIsLockedRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetIsLockedResponse">
+    <wsdl:part name="return" type="xsd:boolean" />
+  </wsdl:message>
+  <wsdl:message name="RegisterRequest">
+    <wsdl:part name="domain" type="tns:Domain" />
+  </wsdl:message>
+  <wsdl:message name="RegisterResponse" />
+  <wsdl:message name="CancelRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+    <wsdl:part name="endTime" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="CancelResponse" />
+  <wsdl:message name="TransferWithOwnerChangeRequest">
+    <wsdl:part name="domain" type="tns:Domain" />
+    <wsdl:part name="authCode" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="TransferWithOwnerChangeResponse" />
+  <wsdl:message name="TransferWithoutOwnerChangeRequest">
+    <wsdl:part name="domain" type="tns:Domain" />
+    <wsdl:part name="authCode" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="TransferWithoutOwnerChangeResponse" />
+  <wsdl:message name="SetNameserversRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+    <wsdl:part name="nameservers" type="tns:ArrayOfNameserver" />
+  </wsdl:message>
+  <wsdl:message name="SetNameserversResponse" />
+  <wsdl:message name="SetLockRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="SetLockResponse" />
+  <wsdl:message name="UnsetLockRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="UnsetLockResponse" />
+  <wsdl:message name="SetDnsEntriesRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+    <wsdl:part name="dnsEntries" type="tns:ArrayOfDnsEntry" />
+  </wsdl:message>
+  <wsdl:message name="SetDnsEntriesResponse" />
+  <wsdl:message name="SetOwnerRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+    <wsdl:part name="registrantWhoisContact" type="tns:WhoisContact" />
+  </wsdl:message>
+  <wsdl:message name="SetOwnerResponse" />
+  <wsdl:message name="SetContactsRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+    <wsdl:part name="contacts" type="tns:ArrayOfWhoisContact" />
+  </wsdl:message>
+  <wsdl:message name="SetContactsResponse" />
+  <wsdl:message name="GetAllTldInfosRequest" />
+  <wsdl:message name="GetAllTldInfosResponse">
+    <wsdl:part name="return" type="tns:ArrayOfTld" />
+  </wsdl:message>
+  <wsdl:message name="GetTldInfoRequest">
+    <wsdl:part name="tldName" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetTldInfoResponse">
+    <wsdl:part name="return" type="tns:Tld" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrentDomainActionRequest">
+    <wsdl:part name="domainName" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="GetCurrentDomainActionResponse">
+    <wsdl:part name="return" type="tns:DomainAction" />
+  </wsdl:message>
+  <wsdl:message name="RetryCurrentDomainActionWithNewDataRequest">
+    <wsdl:part name="domain" type="tns:Domain" />
+  </wsdl:message>
+  <wsdl:message name="RetryCurrentDomainActionWithNewDataResponse" />
+  <wsdl:message name="RetryTransferWithDifferentAuthCodeRequest">
+    <wsdl:part name="domain" type="tns:Domain" />
+    <wsdl:part name="newAuthCode" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:message name="RetryTransferWithDifferentAuthCodeResponse" />
+  <wsdl:message name="CancelDomainActionRequest">
+    <wsdl:part name="domain" type="tns:Domain" />
+  </wsdl:message>
+  <wsdl:message name="CancelDomainActionResponse" />
+  <wsdl:portType name="DomainServicePortType">
+    <wsdl:operation name="batchCheckAvailability" parameterOrder="domainNames">
+      <wsdl:input message="tns:BatchCheckAvailabilityRequest" />
+      <wsdl:output message="tns:BatchCheckAvailabilityResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="checkAvailability" parameterOrder="domainName">
+      <wsdl:input message="tns:CheckAvailabilityRequest" />
+      <wsdl:output message="tns:CheckAvailabilityResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getWhois" parameterOrder="domainName">
+      <wsdl:input message="tns:GetWhoisRequest" />
+      <wsdl:output message="tns:GetWhoisResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getDomainNames">
+      <wsdl:input message="tns:GetDomainNamesRequest" />
+      <wsdl:output message="tns:GetDomainNamesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getInfo" parameterOrder="domainName">
+      <wsdl:input message="tns:GetInfoRequest" />
+      <wsdl:output message="tns:GetInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getAuthCode" parameterOrder="domainName">
+      <wsdl:input message="tns:GetAuthCodeRequest" />
+      <wsdl:output message="tns:GetAuthCodeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getIsLocked" parameterOrder="domainName">
+      <wsdl:input message="tns:GetIsLockedRequest" />
+      <wsdl:output message="tns:GetIsLockedResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="register" parameterOrder="domain">
+      <wsdl:input message="tns:RegisterRequest" />
+      <wsdl:output message="tns:RegisterResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="cancel" parameterOrder="domainName endTime">
+      <wsdl:input message="tns:CancelRequest" />
+      <wsdl:output message="tns:CancelResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="transferWithOwnerChange" parameterOrder="domain authCode">
+      <wsdl:input message="tns:TransferWithOwnerChangeRequest" />
+      <wsdl:output message="tns:TransferWithOwnerChangeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="transferWithoutOwnerChange" parameterOrder="domain authCode">
+      <wsdl:input message="tns:TransferWithoutOwnerChangeRequest" />
+      <wsdl:output message="tns:TransferWithoutOwnerChangeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setNameservers" parameterOrder="domainName nameservers">
+      <wsdl:input message="tns:SetNameserversRequest" />
+      <wsdl:output message="tns:SetNameserversResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setLock" parameterOrder="domainName">
+      <wsdl:input message="tns:SetLockRequest" />
+      <wsdl:output message="tns:SetLockResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="unsetLock" parameterOrder="domainName">
+      <wsdl:input message="tns:UnsetLockRequest" />
+      <wsdl:output message="tns:UnsetLockResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setDnsEntries" parameterOrder="domainName dnsEntries">
+      <wsdl:input message="tns:SetDnsEntriesRequest" />
+      <wsdl:output message="tns:SetDnsEntriesResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setOwner" parameterOrder="domainName registrantWhoisContact">
+      <wsdl:input message="tns:SetOwnerRequest" />
+      <wsdl:output message="tns:SetOwnerResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="setContacts" parameterOrder="domainName contacts">
+      <wsdl:input message="tns:SetContactsRequest" />
+      <wsdl:output message="tns:SetContactsResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getAllTldInfos">
+      <wsdl:input message="tns:GetAllTldInfosRequest" />
+      <wsdl:output message="tns:GetAllTldInfosResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getTldInfo" parameterOrder="tldName">
+      <wsdl:input message="tns:GetTldInfoRequest" />
+      <wsdl:output message="tns:GetTldInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="getCurrentDomainAction" parameterOrder="domainName">
+      <wsdl:input message="tns:GetCurrentDomainActionRequest" />
+      <wsdl:output message="tns:GetCurrentDomainActionResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="retryCurrentDomainActionWithNewData" parameterOrder="domain">
+      <wsdl:input message="tns:RetryCurrentDomainActionWithNewDataRequest" />
+      <wsdl:output message="tns:RetryCurrentDomainActionWithNewDataResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="retryTransferWithDifferentAuthCode" parameterOrder="domain newAuthCode">
+      <wsdl:input message="tns:RetryTransferWithDifferentAuthCodeRequest" />
+      <wsdl:output message="tns:RetryTransferWithDifferentAuthCodeResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="cancelDomainAction" parameterOrder="domain">
+      <wsdl:input message="tns:CancelDomainActionRequest" />
+      <wsdl:output message="tns:CancelDomainActionResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DomainServiceBinding" type="tns:DomainServicePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="batchCheckAvailability">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#batchCheckAvailability" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainNames" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="checkAvailability">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#checkAvailability" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getWhois">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#getWhois" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getDomainNames">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#getDomainNames" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getInfo">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#getInfo" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAuthCode">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#getAuthCode" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getIsLocked">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#getIsLocked" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="register">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#register" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domain" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancel">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#cancel" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName endTime" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transferWithOwnerChange">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#transferWithOwnerChange" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domain authCode" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="transferWithoutOwnerChange">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#transferWithoutOwnerChange" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domain authCode" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setNameservers">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#setNameservers" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName nameservers" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setLock">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#setLock" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="unsetLock">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#unsetLock" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setDnsEntries">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#setDnsEntries" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName dnsEntries" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setOwner">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#setOwner" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName registrantWhoisContact" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="setContacts">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#setContacts" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName contacts" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getAllTldInfos">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#getAllTldInfos" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getTldInfo">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#getTldInfo" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="tldName" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getCurrentDomainAction">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#getCurrentDomainAction" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retryCurrentDomainActionWithNewData">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#retryCurrentDomainActionWithNewData" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domain" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="retryTransferWithDifferentAuthCode">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#retryTransferWithDifferentAuthCode" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domain newAuthCode" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="cancelDomainAction">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#cancelDomainAction" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domain" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DomainServiceService">
+    <wsdl:port name="DomainServicePort" binding="tns:DomainServiceBinding">
+      <soap:address location="https://api.transip.nl/soap/?service=DomainService" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

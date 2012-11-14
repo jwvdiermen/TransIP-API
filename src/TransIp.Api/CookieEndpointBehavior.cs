@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Description;
 using System.ServiceModel.Dispatcher;
@@ -8,10 +9,12 @@ namespace TransIp.Api
 	internal class CookieEndpointBehavior : IEndpointBehavior
 	{
 		private readonly CookieContainer _cookieContainer;
+		private readonly string _uri;
 
-		public CookieEndpointBehavior(CookieContainer cookieContainer)
+		public CookieEndpointBehavior(CookieContainer cookieContainer, string uri)
 		{
 			_cookieContainer = cookieContainer;
+			_uri = uri;
 		}
 
 		public void AddBindingParameters(ServiceEndpoint endpoint, BindingParameterCollection bindingParameters)
@@ -20,7 +23,7 @@ namespace TransIp.Api
 
 		public void ApplyClientBehavior(ServiceEndpoint endpoint, ClientRuntime clientRuntime)
 		{
-			clientRuntime.MessageInspectors.Add(new CookieMessageInspector(_cookieContainer));
+			clientRuntime.MessageInspectors.Add(new CookieMessageInspector(_cookieContainer, _uri));
 		}
 
 		public void ApplyDispatchBehavior(ServiceEndpoint endpoint, EndpointDispatcher endpointDispatcher)

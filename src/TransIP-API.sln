@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{428DAADA-F15E-41EB-A2C5-32B5A26D1DE7}"
 	ProjectSection(SolutionItems) = preProject
 		ApiSettings.cs = ApiSettings.cs
+		shared\SharedAssemblyInfo.cs = shared\SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransIp.Api.Examples.DomainService", "TransIp.Api.Examples.DomainService\TransIp.Api.Examples.DomainService.csproj", "{1BEB870E-1670-4D25-81B4-C5C30BEF1A34}"
@@ -37,7 +38,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{428DAADA-F15E-41EB-A2C5-32B5A26D1DE7} = {D73C8D5A-3C28-4E50-B3D5-7FD5E2984D91}
 		{1BEB870E-1670-4D25-81B4-C5C30BEF1A34} = {D73C8D5A-3C28-4E50-B3D5-7FD5E2984D91}
 	EndGlobalSection
 EndGlobal

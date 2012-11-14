@@ -6,7 +6,7 @@ namespace TransIp.Api.Dto
 	/// <summary>
 	/// This class models a Domain
 	/// </summary>
-	[DataContract]
+	[DataContract(Namespace = "http://www.transip.nl/soap")]
 	public class Domain
 	{
 		/// <summary>
@@ -55,7 +55,7 @@ namespace TransIp.Api.Dto
 		/// Use DomainService.SetLock() to change the lock status of a domain.
 		/// </summary>
 		[DataMember(Name = "isLocked")]
-		public string IsLocked { get; protected set; }
+		public bool? IsLocked { get; protected set; }
 
 		/// <summary>
 		/// Registration date of the domain. Read-only.

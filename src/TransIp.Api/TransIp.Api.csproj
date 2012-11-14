@@ -36,22 +36,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AntiXssLibrary">
-      <HintPath>..\TransIpTest\packages\AntiXSS.4.2.1\lib\net40\AntiXssLibrary.dll</HintPath>
+      <HintPath>..\packages\AntiXSS.4.2.1\lib\net40\AntiXssLibrary.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.2.2.0\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
     <Reference Include="BouncyCastle.Crypto">
-      <HintPath>..\TransIpTest\packages\BouncyCastle.1.7.0\lib\Net20\BouncyCastle.Crypto.dll</HintPath>
+      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net20\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
     <Reference Include="HtmlSanitizationLibrary">
-      <HintPath>..\TransIpTest\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Common">
-      <HintPath>..\TransIpTest\packages\ServiceStack.Common.3.9.25\lib\net35\ServiceStack.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Interfaces">
-      <HintPath>..\TransIpTest\packages\ServiceStack.Common.3.9.25\lib\net35\ServiceStack.Interfaces.dll</HintPath>
-    </Reference>
-    <Reference Include="ServiceStack.Text">
-      <HintPath>..\TransIpTest\packages\ServiceStack.Text.3.9.27\lib\net35\ServiceStack.Text.dll</HintPath>
+      <HintPath>..\packages\AntiXSS.4.2.1\lib\net40\HtmlSanitizationLibrary.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -60,8 +54,13 @@
     <Reference Include="System.XML" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\shared\SharedAssemblyInfo.cs">
+      <Link>Properties\SharedAssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="CookieMessageInspector.cs" />
     <Compile Include="DomainService.cs" />
+    <Compile Include="Dto\Tld.cs" />
+    <Compile Include="Dto\DomainCheckResult.cs" />
     <Compile Include="Dto\DnsEntry.cs" />
     <Compile Include="Dto\Domain.cs" />
     <Compile Include="Dto\DomainAction.cs" />
@@ -72,12 +71,46 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ClientBase.cs" />
     <Compile Include="CookieEndpointBehavior.cs" />
-    <Compile Include="SoapServiceClient.cs" />
+    <Compile Include="Service References\Remote\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <None Include="Service References\Remote\DomainService.wsdl" />
+    <None Include="Service References\Remote\TransIp.Api.Remote.Domain.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Remote\TransIp.Api.Remote.DomainAction.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Remote\TransIp.Api.Remote.DomainCheckResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\Remote\TransIp.Api.Remote.Tld.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\Remote\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Remote\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Remote\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\Remote\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -5,7 +5,7 @@ namespace TransIp.Api.Dto
 	/// <summary>
 	/// Models A DnsEntry.
 	/// </summary>
-	[DataContract]
+	[DataContract(Namespace = "http://www.transip.nl/soap")]
 	public class DnsEntry
 	{
 		/// <summary>

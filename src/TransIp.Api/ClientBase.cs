@@ -7,12 +7,6 @@ using System.Reflection;
 using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using System.ServiceModel.Description;
-using System.Text;
-using System.Text.RegularExpressions;
-using ServiceStack.ServiceClient.Web;
-using System.Security.Cryptography;
-using Encoder = Microsoft.Security.Application.Encoder;
 
 namespace TransIp.Api
 {
@@ -20,11 +14,18 @@ namespace TransIp.Api
 	/// <summary>
 	/// The base client for TransIP services.
 	/// </summary>
-	public abstract class ClientBase
+	public abstract class ClientBase<TClientType, TChannelType>
+		where TChannelType : class
+		where TClientType : ClientBase<TChannelType>
 	{
-		private readonly SoapServiceClient _client;
-		private readonly Uri _uri;
+		private BasicHttpBinding _binding;
+		private readonly string _uri;
 		private readonly string _privateKey;
+
+		/// <summary>
+		/// Gets the service client.
+		/// </summary>
+		public TClientType Client { get; private set; }
 
 		/// <summary>
 		/// Gets the name of the service.
@@ -42,6 +43,29 @@ namespace TransIp.Api
 		public ClientMode Mode { get; private set; }
 
 		/// <summary>
+		/// Gets the cookie container.
+		/// </summary>
+		public CookieContainer Cookies { get; private set; }
+
+		private Binding BasicHttpBinding
+		{
+			get
+			{
+				if (_binding == null)
+				{
+					_binding = new BasicHttpBinding
+					{
+						MaxReceivedMessageSize = int.MaxValue,
+						HostNameComparisonMode = HostNameComparisonMode.StrongWildcard,
+						AllowCookies = false
+					};
+					_binding.Security.Mode = BasicHttpSecurityMode.Transport;
+				}
+				return _binding;
+			}
+		}
+
+		/// <summary>
 		/// Creates a new client for communicating with TransIP services.
 		/// </summary>
 		/// <param name="serviceName">The name of the service.</param>
@@ -51,17 +75,28 @@ namespace TransIp.Api
 		/// <param name="privateKey">The private key.</param>
 		protected ClientBase(string serviceName, string uri, string login, ClientMode mode, string privateKey)
 		{
-			_client = new SoapServiceClient(uri);
-			_uri = new Uri(uri);
+			_uri = uri;
 			_privateKey = privateKey;
 			ServiceName = serviceName;
 			Login = login;
 			Mode = mode;
+			Cookies = new CookieContainer();
+
+			Client = CreateClient(BasicHttpBinding, new EndpointAddress(_uri));
+			Client.ChannelFactory.Endpoint.Behaviors.Add(new CookieEndpointBehavior(Cookies, _uri));
 
 			// Set the static cookies.
 			AddCookie("login", Login);
 			AddCookie("mode", Mode.ToString().ToLower());
 		}
+
+		/// <summary>
+		/// When implemented, should create the client using the given arguments.
+		/// </summary>
+		/// <param name="binding">The binding.</param>
+		/// <param name="address">The address.</param>
+		/// <returns>The created client.</returns>
+		protected abstract TClientType CreateClient(Binding binding, EndpointAddress address);
 
 		/// <summary>
 		/// Update the signature cookies for the given
@@ -89,31 +124,7 @@ namespace TransIp.Api
 
 		private void AddCookie(string name, string value)
 		{
-			_client.Cookies.Add(new Cookie(name, value, "/", _uri.DnsSafeHost));
-		}
-
-		/// <summary>
-		/// Sends the given message.
-		/// </summary>
-		/// <param name="action">The action.</param>
-		/// <param name="args">The arguments.</param>
-		public void Send(string action, params object[] args)
-		{
-			SetSignatureCookies(action, args);
-			_client.SendWithCookies(action, args);
-		}
-
-		/// <summary>
-		/// Sends the given message and returns the response.
-		/// </summary>
-		/// <typeparam name="T">The response type.</typeparam>
-		/// <param name="action">The action.</param>
-		/// <param name="args">The arguments.</param>
-		/// <returns>The response message.</returns>
-		public T Send<T>(string action, params object[] args)
-		{
-			SetSignatureCookies(action, args);
-			return _client.SendWithCookies<T>(action, args);
+			Cookies.Add(new Cookie(name, value, "/", new Uri(_uri).DnsSafeHost));
 		}
 	}
 
