@@ -6,7 +6,7 @@ namespace TransIp.Api.Dto
 	/// <summary>
 	/// WhoisContact
 	/// </summary>
-	[DataContract(Namespace = "http://www.transip.nl/soap")]
+	[DataContract]
 	public class WhoisContact
 	{
 		/// <summary>

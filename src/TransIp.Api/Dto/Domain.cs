@@ -6,7 +6,7 @@ namespace TransIp.Api.Dto
 	/// <summary>
 	/// This class models a Domain
 	/// </summary>
-	[DataContract(Namespace = "http://www.transip.nl/soap")]
+	[DataContract]
 	public class Domain
 	{
 		/// <summary>

@@ -5,7 +5,7 @@ namespace TransIp.Api.Dto
 	/// <summary>
 	/// This class models a DomainAction, which holds information about the action being run.
 	/// </summary>
-	[DataContract(Namespace = "http://www.transip.nl/soap")]
+	[DataContract]
 	public class DomainAction
 	{
 		/// <summary>
