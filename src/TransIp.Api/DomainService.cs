@@ -120,17 +120,6 @@ namespace TransIp.Api
 			return Mapper.Map<Domain>(Client.getInfo(domainName));
 		}
 
-		///// <summary>
-		///// Gets the Auth code for a domainName.
-		///// </summary>
-		///// <param name="domainName">The domainName to get the authcode for.</param>
-		///// <returns>The authentication code for a domain name.</returns>
-		//public string GetAuthCode(string domainName)
-		//{
-		//	SetSignatureCookies("getAuthCode", new object[] { domainName });
-		//	return Client.getAuthCode(domainName);
-		//}
-
 		/// <summary>
 		/// Registers a domain name, will automatically create and sign a proposition for it.
 		/// </summary>
