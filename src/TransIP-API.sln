@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{D7
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{428DAADA-F15E-41EB-A2C5-32B5A26D1DE7}"
 	ProjectSection(SolutionItems) = preProject
-		ApiSettings.cs = ApiSettings.cs
+		shared\ApiSettings.cs = shared\ApiSettings.cs
 		shared\SharedAssemblyInfo.cs = shared\SharedAssemblyInfo.cs
 	EndProjectSection
 EndProject

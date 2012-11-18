@@ -35,6 +35,7 @@ namespace TransIp.Api.Examples.DomainService
 			//var domainNames = domainService.GetDomainNames();
 			//var tldInfo = domainService.GetTldInfo("org");
 			//var info = domainService.GetInfo("crealuz.org");
+			var singleAvailability = domainService.CheckAvailability("crealuz.nl");
 		}
 	}
 }

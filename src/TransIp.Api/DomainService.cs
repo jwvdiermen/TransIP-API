@@ -82,10 +82,10 @@ namespace TransIp.Api
 		/// </summary>
 		/// <param name="domainName">The domain name to check for availability</param>
 		/// <returns>The availability status of the domain name.</returns>
-		public DomainCheckResult CheckAvailability(string domainName)
+		public AvailabilityStatus CheckAvailability(string domainName)
 		{
 			SetSignatureCookies("checkAvailability", new object[] { domainName });
-			return Mapper.Map<DomainCheckResult>(Client.checkAvailability(domainName));
+			return (AvailabilityStatus)Enum.Parse(typeof (AvailabilityStatus), Client.checkAvailability(domainName), true);
 		}
 
 		/// <summary>
