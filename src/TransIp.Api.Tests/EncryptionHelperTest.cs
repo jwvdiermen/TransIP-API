@@ -1,6 +1,5 @@
-﻿using System;
+﻿using NUnit.Framework;
 using System.Collections.Generic;
-using NUnit.Framework;
 using TransIp.Api.Dto;
 
 namespace TransIp.Api.Tests
