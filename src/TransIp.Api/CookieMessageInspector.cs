@@ -46,7 +46,7 @@ namespace TransIp.Api
 				request.Properties.Add(HttpRequestMessageProperty.Name, new HttpRequestMessageProperty());
 			}
 
-			var httpRequest = (HttpRequestMessageProperty)request.Properties[HttpRequestMessageProperty.Name];
+			var httpRequest = (HttpRequestMessageProperty) request.Properties[HttpRequestMessageProperty.Name];
 			httpRequest.Headers.Add(HttpRequestHeader.Cookie, _cookieContainer.GetCookieHeader(new Uri(Uri)));
 
 			return null;

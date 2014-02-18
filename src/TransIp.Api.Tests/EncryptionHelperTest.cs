@@ -9,8 +9,9 @@ namespace TransIp.Api.Tests
 	public class EncryptionHelperTest
 	{
 		#region Data
-		private static readonly string PrivateKey = 
-@"-----BEGIN RSA PRIVATE KEY-----
+
+		private static readonly string PrivateKey =
+			@"-----BEGIN RSA PRIVATE KEY-----
 MIIEpAIBAAKCAQEAzmF5dRwIDondpKnOZMIC2ew4nLlaMLvCZ3283mysD9z5Brea
 YIoRvQJt725AuA8CffDX5UrUeOuaCpmXH7+QL3/tcucAVBwJ5RzKrUpmSSPIXUJQ
 qXhz1MFIS6QHPtWpRnL5V2Wo9d6vgWU7PFKGqQfAJUzmtDfVsUbUM7BrT7EvWGUX
@@ -37,6 +38,7 @@ cEC4AQKBgQCCvztBn38T1CiC4X5xS8HZe1wqPXhaBX53/wnr2APM764VSGXCsJO/
 P6e3Hd2mi4E/OCEkq3Wn76B0ruyndSHgu2NITfTUdaZiaRhmom5tcaQhrps+lomP
 6YNatcJ1NRUjBEAbx6GUTdd+7kpAmfSjCp0FpgjiXW+73AHZs3M1eA==
 -----END RSA PRIVATE KEY-----";
+
 		#endregion
 
 		[Test]
@@ -47,17 +49,17 @@ P6e3Hd2mi4E/OCEkq3Wn76B0ruyndSHgu2NITfTUdaZiaRhmom5tcaQhrps+lomP
 				Name = "example.com",
 				DnsEntries = new[]
 				{
-					new DnsEntry { Name = "@", Expire = 86400, Type = DnsEntryType.A, Content = "80.69.67.46" },
-					new DnsEntry { Name = "@", Expire = 86400, Type = DnsEntryType.MX, Content = "10 @" },
-					new DnsEntry { Name = "@", Expire = 86400, Type = DnsEntryType.MX, Content = "20 relay.transip.nl." },
-					new DnsEntry { Name = "ftp", Expire = 86400, Type = DnsEntryType.CNAME, Content = "@" },
-					new DnsEntry { Name = "mail", Expire = 86400, Type = DnsEntryType.CNAME, Content = "@" },
-					new DnsEntry { Name = "www", Expire = 86400, Type = DnsEntryType.CNAME, Content = "@" }
+					new DnsEntry {Name = "@", Expire = 86400, Type = DnsEntryType.A, Content = "80.69.67.46"},
+					new DnsEntry {Name = "@", Expire = 86400, Type = DnsEntryType.MX, Content = "10 @"},
+					new DnsEntry {Name = "@", Expire = 86400, Type = DnsEntryType.MX, Content = "20 relay.transip.nl."},
+					new DnsEntry {Name = "ftp", Expire = 86400, Type = DnsEntryType.CNAME, Content = "@"},
+					new DnsEntry {Name = "mail", Expire = 86400, Type = DnsEntryType.CNAME, Content = "@"},
+					new DnsEntry {Name = "www", Expire = 86400, Type = DnsEntryType.CNAME, Content = "@"}
 				}
 			};
 
-			var timestamp = "1352842387";
-			var nonce = "50a2bc93d5e3e6.28404859";
+			const string timestamp = "1352842387";
+			const string nonce = "50a2bc93d5e3e6.28404859";
 
 			var signature = EncryptionHelper.Encode(EncryptionHelper.Sign(PrivateKey, new object[]
 			{
@@ -70,7 +72,9 @@ P6e3Hd2mi4E/OCEkq3Wn76B0ruyndSHgu2NITfTUdaZiaRhmom5tcaQhrps+lomP
 			}));
 
 			// Expected signature taken from PHP example and replicated here in .NET
-			const string expected = "wghhEAhMJNt4a4Rxun3oTODB4sJSvfJNYDkNqxO3PkWCkdpRrSh9MgiVCkUeAbl0zBrWf5SIXAsQSwBSrT0hoj3MyVs7XFNnod%2Finen3cLh65JCdVTS%2BRqNDqOlPzeI0AQ8tnuUXjgR%2Fr%2BxFaUJxrdirVsDt%2B4KaIurmztsY4U8%2BBLMBCS9HDoYKMJUFIGlWWHcYpNVIyg%2F8FzfXQRqDPfqOkzg%2FuXQA0%2BVF49zQewxdEYI6qLKPl8T%2BoWv%2FjgvlJZydmp378woawbngE5tQ%2FEQbOfgAHBM9i%2BwhbRFH%2FWpEy%2BJZPyhvV2sQxiDjjVFMX1A%2F9ue0rVNnjBKj86f2Rg%3D%3D";
+			const string expected =
+				"wghhEAhMJNt4a4Rxun3oTODB4sJSvfJNYDkNqxO3PkWCkdpRrSh9MgiVCkUeAbl0zBrWf5SIXAsQSwBSrT0hoj3MyVs7XFNnod%2Finen3cLh65JCdVTS%2BRqNDqOlPzeI0AQ8tnuUXjgR%2Fr%2BxFaUJxrdirVsDt%2B4KaIurmztsY4U8%2BBLMBCS9HDoYKMJUFIGlWWHcYpNVIyg%2F8FzfXQRqDPfqOkzg%2FuXQA0%2BVF49zQewxdEYI6qLKPl8T%2BoWv%2FjgvlJZydmp378woawbngE5tQ%2FEQbOfgAHBM9i%2BwhbRFH%2FWpEy%2BJZPyhvV2sQxiDjjVFMX1A%2F9ue0rVNnjBKj86f2Rg%3D%3D";
+			
 			Assert.AreEqual(expected, signature);
 		}
 	}

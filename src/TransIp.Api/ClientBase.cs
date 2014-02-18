@@ -10,7 +10,6 @@ using System.ServiceModel.Channels;
 
 namespace TransIp.Api
 {
-
 	/// <summary>
 	/// The base client for TransIP services.
 	/// </summary>

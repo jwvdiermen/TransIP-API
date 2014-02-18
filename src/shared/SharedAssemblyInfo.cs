@@ -2,7 +2,6 @@
 
 [assembly: AssemblyProduct("TransIP API")]
 [assembly: AssemblyCompany("Crealuz")]
-[assembly: AssemblyCopyright("Copyright © 2011-2012 Crealuz - All rights reserved")]
-
-[assembly: AssemblyVersion("0.1.3")]
-[assembly: AssemblyFileVersion("0.1.3")]
+[assembly: AssemblyCopyright("Copyright © 2011-2014 Crealuz - All rights reserved")]
+[assembly: AssemblyVersion("0.1.4")]
+[assembly: AssemblyFileVersion("0.1.4")]

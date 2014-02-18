@@ -20,6 +20,7 @@
         <xsd:sequence>
           <xsd:element name="domainName" type="xsd:string" />
           <xsd:element name="status" type="xsd:string" />
+          <xsd:element name="actions" type="tns:ArrayOfstring" />
         </xsd:sequence>
       </xsd:complexType>
       <xsd:complexType name="Domain">
@@ -101,6 +102,13 @@
           <xsd:element name="bannerLine3" type="xsd:string" />
         </xsd:sequence>
       </xsd:complexType>
+      <xsd:complexType name="ArrayOfDomain">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="soapenc:Array">
+            <xsd:attribute wsdl:arrayType="tns:Domain[]" ref="soapenc:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
       <xsd:complexType name="ArrayOfTld">
         <xsd:complexContent mixed="false">
           <xsd:restriction base="soapenc:Array">
@@ -154,6 +162,12 @@
   </wsdl:message>
   <wsdl:message name="GetInfoResponse">
     <wsdl:part name="return" type="tns:Domain" />
+  </wsdl:message>
+  <wsdl:message name="BatchGetInfoRequest">
+    <wsdl:part name="domainNames" type="tns:ArrayOfstring" />
+  </wsdl:message>
+  <wsdl:message name="BatchGetInfoResponse">
+    <wsdl:part name="return" type="tns:ArrayOfDomain" />
   </wsdl:message>
   <wsdl:message name="GetAuthCodeRequest">
     <wsdl:part name="domainName" type="xsd:string" />
@@ -263,6 +277,10 @@
     <wsdl:operation name="getInfo" parameterOrder="domainName">
       <wsdl:input message="tns:GetInfoRequest" />
       <wsdl:output message="tns:GetInfoResponse" />
+    </wsdl:operation>
+    <wsdl:operation name="batchGetInfo" parameterOrder="domainNames">
+      <wsdl:input message="tns:BatchGetInfoRequest" />
+      <wsdl:output message="tns:BatchGetInfoResponse" />
     </wsdl:operation>
     <wsdl:operation name="getAuthCode" parameterOrder="domainName">
       <wsdl:input message="tns:GetAuthCodeRequest" />
@@ -379,6 +397,15 @@
       <soap:operation soapAction="urn:DomainService#DomainServiceServer#getInfo" />
       <wsdl:input>
         <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainName" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="batchGetInfo">
+      <soap:operation soapAction="urn:DomainService#DomainServiceServer#batchGetInfo" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="domainNames" />
       </wsdl:input>
       <wsdl:output>
         <soap:body use="encoded" namespace="http://www.transip.nl/soap" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" parts="return" />

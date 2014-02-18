@@ -3,9 +3,9 @@ using TransIp.Api.Examples.Shared;
 
 namespace TransIp.Api.Examples.DomainService
 {
-	class Program
+	internal class Program
 	{
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
 			var domainService = new Api.DomainService(ApiSettings.Login, ApiSettings.Mode, ApiSettings.PrivateKey);
 

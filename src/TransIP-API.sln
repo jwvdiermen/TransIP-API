@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2012
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30110.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransIp.Api", "TransIp.Api\TransIp.Api.csproj", "{0C230541-FF71-4DDC-9AAC-213990AC4AFA}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransIp.Api.Tests", "TransIp.Api.Tests\TransIp.Api.Tests.csproj", "{CDB1716D-C23F-4E5B-9889-F55E4C6D6F01}"
@@ -14,6 +16,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Shared", "Shared", "{428DAA
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TransIp.Api.Examples.DomainService", "TransIp.Api.Examples.DomainService\TransIp.Api.Examples.DomainService.csproj", "{1BEB870E-1670-4D25-81B4-C5C30BEF1A34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{540D3B19-0E65-4F12-8895-B12F6049CD9B}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

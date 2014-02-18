@@ -23,7 +23,7 @@ namespace TransIp.Api
 	{
 		private static readonly Regex PrivateKeyRegex =
 			new Regex(@"-----BEGIN RSA PRIVATE KEY-----(.*)-----END RSA PRIVATE KEY-----",
-					  RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Compiled);
+				RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Compiled);
 
 		private static readonly Regex WhitespaceRegex = new Regex(@"\s*", RegexOptions.Singleline | RegexOptions.Compiled);
 
@@ -104,16 +104,16 @@ namespace TransIp.Api
 			var hashAlg = SHA512.Create();
 			var hash = hashAlg.ComputeHash(Encoding.ASCII.GetBytes(data));
 
-			return signature.Select(x => (byte)x).Concat(hash).ToArray();
+			return signature.Select(x => (byte) x).Concat(hash).ToArray();
 		}
 
 		private static byte[] Encrypt(byte[] digest, string key)
 		{
 			var keyReader = new StringReader(key);
 			var pemReader = new PemReader(keyReader);
-			
-			var keyPair = (AsymmetricCipherKeyPair)pemReader.ReadObject();
-			var privateKey = (RsaPrivateCrtKeyParameters)keyPair.Private;
+
+			var keyPair = (AsymmetricCipherKeyPair) pemReader.ReadObject();
+			var privateKey = (RsaPrivateCrtKeyParameters) keyPair.Private;
 
 			var cipher = CipherUtilities.GetCipher("RSA/None/PKCS1Padding");
 			cipher.Init(true, privateKey);
@@ -155,10 +155,7 @@ namespace TransIp.Api
 		{
 			var result = obj != null ? Encoder.UrlEncode(obj.ToString()) : "";
 			result = result.Replace("%7E", "~"); // Not sure if this is necessary.
-			result = EscapeRegex.Replace(result, match =>
-			{
-				return match.Value.ToUpper();
-			});
+			result = EscapeRegex.Replace(result, match => { return match.Value.ToUpper(); });
 
 			return result;
 		}
@@ -173,7 +170,7 @@ namespace TransIp.Api
 			{
 				return true;
 			}
-			if (arg.GetType().GetCustomAttributes(typeof(DataContractAttribute), false).Any())
+			if (arg.GetType().GetCustomAttributes(typeof (DataContractAttribute), false).Any())
 			{
 				return true;
 			}
@@ -188,11 +185,11 @@ namespace TransIp.Api
 			if (arg is IEnumerable && !(arg is string))
 			{
 				int counter = 0;
-				foreach (var obj in (IEnumerable)arg)
+				foreach (var obj in (IEnumerable) arg)
 				{
 					if (obj is KeyValuePair<string, string>)
 					{
-						var keyValuePair = (KeyValuePair<string, string>)obj;
+						var keyValuePair = (KeyValuePair<string, string>) obj;
 						result.Add(keyValuePair.Key, keyValuePair.Value);
 					}
 					else
@@ -202,7 +199,7 @@ namespace TransIp.Api
 					counter++;
 				}
 			}
-			else if (arg.GetType().GetCustomAttributes(typeof(DataContractAttribute), false).Any())
+			else if (arg.GetType().GetCustomAttributes(typeof (DataContractAttribute), false).Any())
 			{
 				foreach (var member in arg.GetType().GetMembers(BindingFlags.Public | BindingFlags.Instance))
 				{
@@ -210,7 +207,7 @@ namespace TransIp.Api
 					if (attr != null)
 					{
 						result.Add(attr.Name ?? member.Name,
-							member is FieldInfo ? ((FieldInfo)member).GetValue(arg) : ((PropertyInfo)member).GetValue(arg));
+							member is FieldInfo ? ((FieldInfo) member).GetValue(arg) : ((PropertyInfo) member).GetValue(arg));
 					}
 				}
 			}

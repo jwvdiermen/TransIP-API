@@ -1,15 +1,23 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
-using AutoMapper;
 using TransIp.Api.Dto;
+using DnsEntry = TransIp.Api.Dto.DnsEntry;
+using Domain = TransIp.Api.Dto.Domain;
+using DomainAction = TransIp.Api.Dto.DomainAction;
+using DomainBranding = TransIp.Api.Dto.DomainBranding;
+using DomainCheckResult = TransIp.Api.Dto.DomainCheckResult;
+using Nameserver = TransIp.Api.Dto.Nameserver;
+using Tld = TransIp.Api.Dto.Tld;
+using WhoisContact = TransIp.Api.Dto.WhoisContact;
 
 namespace TransIp.Api
 {
 	/// <summary>
 	/// The service for domain related tasks.
 	/// </summary>
-	public class DomainService : ClientBase<Remote.DomainServicePortTypeClient, Remote.DomainServicePortType>
+	public class DomainService : ClientBase<Remote.DomainServicePortTypeClient, Remote.DomainServicePortType>, IDomainService
 	{
 		/// <summary>
 		/// Static constructor.
@@ -20,7 +28,7 @@ namespace TransIp.Api
 			Mapper.CreateMap<Remote.DnsEntry, DnsEntry>();
 
 			Mapper.CreateMap<Remote.Domain, Domain>()
-				.ForMember(x => x.IsLocked, opt => opt.ResolveUsing(x => x.isLockedSpecified ? x.isLocked : (bool?)null));
+				.ForMember(x => x.IsLocked, opt => opt.ResolveUsing(x => x.isLockedSpecified ? x.isLocked : (bool?) null));
 			Mapper.CreateMap<Domain, Remote.Domain>()
 				.ForMember(x => x.isLocked, opt => opt.ResolveUsing(x => x.IsLocked.GetValueOrDefault(false)))
 				.ForMember(x => x.isLockedSpecified, opt => opt.ResolveUsing(x => x.IsLocked.HasValue));
@@ -73,7 +81,7 @@ namespace TransIp.Api
 		/// <returns>A list of DomainCheckResult objects, holding the domainName and the status per result.</returns>
 		public DomainCheckResult[] BatchCheckAvailability(string[] domainNames)
 		{
-			SetSignatureCookies("batchCheckAvailability", new object[] { domainNames });
+			SetSignatureCookies("batchCheckAvailability", new object[] {domainNames});
 			return Mapper.Map<DomainCheckResult[]>(Client.batchCheckAvailability(domainNames));
 		}
 
@@ -84,8 +92,8 @@ namespace TransIp.Api
 		/// <returns>The availability status of the domain name.</returns>
 		public AvailabilityStatus CheckAvailability(string domainName)
 		{
-			SetSignatureCookies("checkAvailability", new object[] { domainName });
-			return (AvailabilityStatus)Enum.Parse(typeof (AvailabilityStatus), Client.checkAvailability(domainName), true);
+			SetSignatureCookies("checkAvailability", new object[] {domainName});
+			return (AvailabilityStatus) Enum.Parse(typeof (AvailabilityStatus), Client.checkAvailability(domainName), true);
 		}
 
 		/// <summary>
@@ -95,7 +103,7 @@ namespace TransIp.Api
 		/// <returns>The whois data for the domain.</returns>
 		public string GetWhois(string domainName)
 		{
-			SetSignatureCookies("getWhois", new object[] { domainName });
+			SetSignatureCookies("getWhois", new object[] {domainName});
 			return Client.getWhois(domainName);
 		}
 
@@ -116,7 +124,7 @@ namespace TransIp.Api
 		/// <returns>A domain object holding the data for the requested domainName.</returns>
 		public Domain GetInfo(string domainName)
 		{
-			SetSignatureCookies("getInfo", new object[] { domainName });
+			SetSignatureCookies("getInfo", new object[] {domainName});
 			return Mapper.Map<Domain>(Client.getInfo(domainName));
 		}
 
@@ -127,7 +135,7 @@ namespace TransIp.Api
 		/// <remarks>Requires "readwrite" mode.</remarks>
 		public void Register(Domain domain)
 		{
-			SetSignatureCookies("register", new object[] { domain });
+			SetSignatureCookies("register", new object[] {domain});
 			Client.register(Mapper.Map<Remote.Domain>(domain));
 		}
 
@@ -141,7 +149,7 @@ namespace TransIp.Api
 		{
 			var endTimeStr = endTime.ToString().ToUpper();
 
-			SetSignatureCookies("cancel", new object[] { domainName, endTimeStr });
+			SetSignatureCookies("cancel", new object[] {domainName, endTimeStr});
 			Client.cancel(domainName, endTimeStr);
 		}
 
@@ -152,7 +160,7 @@ namespace TransIp.Api
 		/// <param name="authCode">The authorization code for domains needing this for transfers (e.g. .com or .org transfers). Leave empty when n/a.</param>
 		public void TransferWithOwnerChange(Domain domain, string authCode)
 		{
-			SetSignatureCookies("transferWithOwnerChange", new object[] { domain, authCode });
+			SetSignatureCookies("transferWithOwnerChange", new object[] {domain, authCode});
 			Client.transferWithOwnerChange(Mapper.Map<Remote.Domain>(domain), authCode);
 		}
 
@@ -163,7 +171,7 @@ namespace TransIp.Api
 		/// <param name="authCode">The authorization code for domains needing this for transfers (e.g. .com or .org transfers). Leave empty when n/a.</param>
 		public void TransferWithoutOwnerChange(Domain domain, string authCode)
 		{
-			SetSignatureCookies("transferWithoutOwnerChange", new object[] { domain, authCode });
+			SetSignatureCookies("transferWithoutOwnerChange", new object[] {domain, authCode});
 			Client.transferWithoutOwnerChange(Mapper.Map<Remote.Domain>(domain), authCode);
 		}
 
@@ -174,7 +182,7 @@ namespace TransIp.Api
 		/// <param name="nameservers">The list of new nameservers for this domain.</param>
 		public void SetNameservers(string domainName, Nameserver[] nameservers)
 		{
-			SetSignatureCookies("setNameservers", new object[] { domainName, nameservers });
+			SetSignatureCookies("setNameservers", new object[] {domainName, nameservers});
 			Client.setNameservers(domainName, Mapper.Map<Remote.Nameserver[]>(nameservers));
 		}
 
@@ -184,7 +192,7 @@ namespace TransIp.Api
 		/// <param name="domainName">The domain name to set the lock for.</param>
 		public void SetLock(string domainName)
 		{
-			SetSignatureCookies("setLock", new object[] { domainName });
+			SetSignatureCookies("setLock", new object[] {domainName});
 			Client.setLock(domainName);
 		}
 
@@ -194,7 +202,7 @@ namespace TransIp.Api
 		/// <param name="domainName">The domain name to unlock.</param>
 		public void UnsetLock(string domainName)
 		{
-			SetSignatureCookies("unsetLock", new object[] { domainName });
+			SetSignatureCookies("unsetLock", new object[] {domainName});
 			Client.unsetLock(domainName);
 		}
 
@@ -205,7 +213,7 @@ namespace TransIp.Api
 		/// <param name="dnsEntries">The list of new DnsEntries for this domain.</param>
 		public void SetDnsEntries(string domainName, DnsEntry[] dnsEntries)
 		{
-			SetSignatureCookies("setDnsEntries", new object[] { domainName, dnsEntries });
+			SetSignatureCookies("setDnsEntries", new object[] {domainName, dnsEntries});
 			Client.setDnsEntries(domainName, Mapper.Map<Remote.DnsEntry[]>(dnsEntries));
 		}
 
@@ -219,7 +227,7 @@ namespace TransIp.Api
 		/// <param name="registrantWhoisContact">The new contact data for this.</param>
 		public void SetOwner(string domainName, WhoisContact registrantWhoisContact)
 		{
-			SetSignatureCookies("setOwner", new object[] { domainName, registrantWhoisContact });
+			SetSignatureCookies("setOwner", new object[] {domainName, registrantWhoisContact});
 			Client.setOwner(domainName, Mapper.Map<Remote.WhoisContact>(registrantWhoisContact));
 		}
 
@@ -230,7 +238,7 @@ namespace TransIp.Api
 		/// <param name="contacts">The list of new contacts for this domain.</param>
 		public void SetContacts(string domainName, WhoisContact[] contacts)
 		{
-			SetSignatureCookies("setContacts", new object[] { domainName, contacts });
+			SetSignatureCookies("setContacts", new object[] {domainName, contacts});
 			Client.setContacts(domainName, Mapper.Map<Remote.WhoisContact[]>(contacts));
 		}
 
@@ -251,7 +259,7 @@ namespace TransIp.Api
 		/// <returns>Tld object with info about this Tld.</returns>
 		public Tld GetTldInfo(string tldName)
 		{
-			SetSignatureCookies("getTldInfo", new object[] { tldName });
+			SetSignatureCookies("getTldInfo", new object[] {tldName});
 			return Mapper.Map<Tld>(Client.getTldInfo(tldName));
 		}
 
@@ -262,7 +270,7 @@ namespace TransIp.Api
 		/// <returns>If this domain is currently running an action, a corresponding DomainAction with info about the action will be returned.</returns>
 		public DomainAction GetCurrentDomainAction(string domainName)
 		{
-			SetSignatureCookies("getCurrentDomainAction", new object[] { domainName });
+			SetSignatureCookies("getCurrentDomainAction", new object[] {domainName});
 			return Mapper.Map<DomainAction>(Client.getCurrentDomainAction(domainName));
 		}
 
@@ -274,7 +282,7 @@ namespace TransIp.Api
 		/// <param name="domain">The domain with data to retry.</param>
 		public void RetryCurrentDomainActionWithNewData(Domain domain)
 		{
-			SetSignatureCookies("retryCurrentDomainActionWithNewData", new object[] { domain });
+			SetSignatureCookies("retryCurrentDomainActionWithNewData", new object[] {domain});
 			Client.retryCurrentDomainActionWithNewData(Mapper.Map<Remote.Domain>(domain));
 		}
 
@@ -285,7 +293,7 @@ namespace TransIp.Api
 		/// <param name="newAuthCode">New authorization code to try.</param>
 		public void RetryTransferWithDifferentAuthCode(Domain domain, string newAuthCode)
 		{
-			SetSignatureCookies("retryTransferWithDifferentAuthCode", new object[] { domain, newAuthCode });
+			SetSignatureCookies("retryTransferWithDifferentAuthCode", new object[] {domain, newAuthCode});
 			Client.retryTransferWithDifferentAuthCode(Mapper.Map<Remote.Domain>(domain), newAuthCode);
 		}
 
@@ -295,7 +303,7 @@ namespace TransIp.Api
 		/// <param name="domain">The domain to cancel the action for.</param>
 		public void CancelDomainAction(Domain domain)
 		{
-			SetSignatureCookies("cancelDomainAction", new object[] { domain });
+			SetSignatureCookies("cancelDomainAction", new object[] {domain});
 			Client.cancelDomainAction(Mapper.Map<Remote.Domain>(domain));
 		}
 	}
