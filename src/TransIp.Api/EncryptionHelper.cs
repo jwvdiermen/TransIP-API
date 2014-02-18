@@ -22,11 +22,9 @@ namespace TransIp.Api
 	public static class EncryptionHelper
 	{
 		private static readonly Regex PrivateKeyRegex =
-			new Regex(@"-----BEGIN RSA PRIVATE KEY-----(.*)-----END RSA PRIVATE KEY-----",
+			new Regex(@"-----BEGIN (RSA )?PRIVATE KEY-----(.*)-----END (RSA )?PRIVATE KEY-----",
 				RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.Compiled);
-
-		private static readonly Regex WhitespaceRegex = new Regex(@"\s*", RegexOptions.Singleline | RegexOptions.Compiled);
-
+		
 		private static readonly Regex EscapeRegex = new Regex(@"%..", RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
 		/// <summary>
@@ -43,13 +41,13 @@ namespace TransIp.Api
 				throw new Exception("Invalid private key.");
 			}
 
-			var key = matches[0].Groups[1].Value;
+			/*var key = matches[0].Groups[2].Value;
 			key = WhitespaceRegex.Replace(key, "");
 			key = ChunkSplit(key, 64, "\n");
-			key = "-----BEGIN RSA PRIVATE KEY-----\n" + key + "-----END RSA PRIVATE KEY-----";
+			key = "-----BEGIN RSA PRIVATE KEY-----\n" + key + "-----END RSA PRIVATE KEY-----";*/
 
 			var digest = Sha512Asn1(EncodeArguments(args));
-			var signature = Encrypt(digest, key);
+			var signature = Encrypt(digest, privateKey);
 
 			return Convert.ToBase64String(signature);
 		}
@@ -112,11 +110,24 @@ namespace TransIp.Api
 			var keyReader = new StringReader(key);
 			var pemReader = new PemReader(keyReader);
 
-			var keyPair = (AsymmetricCipherKeyPair) pemReader.ReadObject();
-			var privateKey = (RsaPrivateCrtKeyParameters) keyPair.Private;
+			var pemObject = pemReader.ReadObject();
+			ICipherParameters cipherParameters;
+			if (pemObject is RsaPrivateCrtKeyParameters)
+			{
+				cipherParameters = (RsaPrivateCrtKeyParameters)pemObject;
+			}
+			else if (pemObject is AsymmetricCipherKeyPair)
+			{
+				var keyPair = (AsymmetricCipherKeyPair) pemObject;
+				cipherParameters = keyPair.Private;
+			}
+			else
+			{
+				throw new Exception("Unsupported private key format. Got object of type '" + pemObject.GetType() + "' from PEM reader.");
+			}
 
 			var cipher = CipherUtilities.GetCipher("RSA/None/PKCS1Padding");
-			cipher.Init(true, privateKey);
+			cipher.Init(true, cipherParameters);
 
 			return cipher.DoFinal(digest);
 		}

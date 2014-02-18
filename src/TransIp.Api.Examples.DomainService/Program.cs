@@ -1,5 +1,4 @@
-﻿using TransIp.Api.Dto;
-using TransIp.Api.Examples.Shared;
+﻿using TransIp.Api.Examples.Shared;
 
 namespace TransIp.Api.Examples.DomainService
 {
@@ -35,7 +34,18 @@ namespace TransIp.Api.Examples.DomainService
 			//var domainNames = domainService.GetDomainNames();
 			//var tldInfo = domainService.GetTldInfo("org");
 			//var info = domainService.GetInfo("crealuz.org");
-			var singleAvailability = domainService.CheckAvailability("crealuz.nl");
+			//var singleAvailability = domainService.CheckAvailability("crealuz.nl");
+
+			//var info = domainService.GetInfo("your-domain.com");
+			//var entries = info.DnsEntries.ToList();
+			//entries.Add(new DnsEntry
+			//{
+			//	Name = "local",
+			//	Type = DnsEntryType.A,
+			//	Expire = 3600, // 1 hour
+			//	Content = "127.0.0.1"
+			//});
+			//domainService.SetDnsEntries("j-cl.eu", entries.ToArray());
 		}
 	}
 }
