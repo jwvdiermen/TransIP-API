@@ -1,32 +1,22 @@
 #################
-## Eclipse
+## Web Projects
 #################
 
-*.pydevproject
-.project
-.metadata
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
-.classpath
-.settings/
-.loadpath
+node_modules
+.tmp
+tmp
+temp
+.sass-cache
+bower_components
+jam
 
-# External tool builders
-.externalToolBuilders/
 
-# Locally stored "Eclipse launch configurations"
-*.launch
+#################
+## WebStorm
+#################
 
-# CDT-specific
-.cproject
-
-# PDT-specific
-.buildpath
+workspace.xml
+*.iws
 
 
 #################
@@ -63,8 +53,8 @@ local.properties
 .builds
 *.dotCover
 
-## TODO: If you have NuGet Package Restore enabled, uncomment this
-#packages/
+# NuGet packages
+packages/
 
 # Visual C++ cache files
 ipch/
@@ -101,7 +91,6 @@ publish
 [Oo]bj
 sql
 TestResults
-*.Cache
 ClientBin
 stylecop.*
 ~$*
@@ -115,7 +104,6 @@ Backup*/
 UpgradeLog*.XML
 
 
-
 ############
 ## Windows
 ############
@@ -125,39 +113,7 @@ Thumbs.db
 
 # Folder config file
 Desktop.ini
-
-
-#############
-## Python
-#############
-
-*.py[co]
-
-# Packages
-*.egg
-*.egg-info
-dist
-build
-eggs
-parts
-bin
-var
-sdist
-develop-eggs
-.installed.cfg
-
-# Installer logs
-pip-log.txt
-
-# Unit test / coverage reports
-.coverage
-.tox
-
-#Translations
-*.mo
-
-#Mr Developer
-.mr.developer.cfg
-
-# Mac crap
-.DS_Store
+TestResult.xml
+jd.Web.AspNet/log/
+jd.Web.AspNet/App_Data/log/
+Settings.local.xml

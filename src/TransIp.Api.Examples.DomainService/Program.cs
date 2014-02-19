@@ -1,4 +1,6 @@
-﻿using TransIp.Api.Examples.Shared;
+﻿using System.Linq;
+using TransIp.Api.Dto;
+using TransIp.Api.Examples.Shared;
 
 namespace TransIp.Api.Examples.DomainService
 {
@@ -36,7 +38,7 @@ namespace TransIp.Api.Examples.DomainService
 			//var info = domainService.GetInfo("crealuz.org");
 			//var singleAvailability = domainService.CheckAvailability("crealuz.nl");
 
-			//var info = domainService.GetInfo("your-domain.com");
+			//var info = domainService.GetInfo("j-cl.eu");
 			//var entries = info.DnsEntries.ToList();
 			//entries.Add(new DnsEntry
 			//{
