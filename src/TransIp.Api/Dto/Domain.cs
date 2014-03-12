@@ -67,5 +67,15 @@ namespace TransIp.Api.Dto
 		/// </summary>
 		[DataMember(Name = "renewalDate")]
 		public string RenewalDate { get; protected set; }
+
+		/// <summary>
+		/// Default constructor.
+		/// </summary>
+		public Domain()
+		{
+			Nameservers = new Nameserver[0];
+			Contacts = new WhoisContact[0];
+			DnsEntries = new DnsEntry[0];
+		}
 	}
 }

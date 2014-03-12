@@ -9,6 +9,11 @@ namespace TransIp.Api.Examples.DomainService
 		private static void Main(string[] args)
 		{
 			var domainService = new Api.DomainService(ApiSettings.Login, ApiSettings.Mode, ApiSettings.PrivateKey);
+			
+			//domainService.Register(new Domain
+			//{
+			//	Name = "example.com"
+			//});
 
 			// Use the code below to experiment with the API by changing values and removing the comments.
 
